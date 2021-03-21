@@ -1,12 +1,34 @@
 <template>
   <div id="app">
-    <div id="nav">
+    <Navbar></Navbar>
+    <!-- <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
-    </div>
+    </div> -->
     <router-view/>
   </div>
 </template>
+
+<script>
+import { mapActions } from 'vuex';
+import Navbar from './components/Navbar.vue';
+
+export default {
+  name: 'App',
+  components: {
+    Navbar,
+  },
+  data() {
+    return {};
+  },
+  created() {
+    this.getArticles();
+  },
+  methods: {
+    ...mapActions(['getArticles']),
+  },
+};
+</script>
 
 <style lang="scss">
 #app {
