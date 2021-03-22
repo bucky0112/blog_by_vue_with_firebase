@@ -1,5 +1,6 @@
 <template>
   <b-container fluid>
+    <b-button @click="addArticle">新增文章</b-button>
     <b-table :items="articles" :fields="fields">
       <template v-slot:cell(date)="data">
         {{ data.value | changeTime }}
@@ -37,8 +38,10 @@ export default {
   },
   methods: {
     editArticle() {},
-    deleteArticle(data) {
-      console.log(data);
+    deleteArticle() {
+    },
+    addArticle() {
+      this.$router.push('addArticle');
     },
   },
   filters: {

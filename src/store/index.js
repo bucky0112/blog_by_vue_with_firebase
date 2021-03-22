@@ -20,6 +20,9 @@ export default new Vuex.Store({
     SETSEARCH(state, payload) {
       state.search = payload;
     },
+    NEWARTICLE(state, payload) {
+      state.articles = [payload, ...state.articles];
+    },
   },
   actions: {
     getArticleData(context, payload) {
@@ -33,6 +36,10 @@ export default new Vuex.Store({
     },
     getSearchKey(context, payload) {
       context.commit('SETSEARCH', payload);
+    },
+    newArticle(context, payload) {
+      // payload.id = new Date().getTime();
+      context.commit('NEWARTICLE', payload);
     },
   },
   getters: {

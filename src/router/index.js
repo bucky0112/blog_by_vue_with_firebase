@@ -4,6 +4,7 @@ import index from '../views/index.vue';
 import articlePage from '../views/articlePage.vue';
 import admin from '../views/admin/admin.vue';
 import login from '../views/login.vue';
+import addArticle from '../views/admin/addArticle.vue';
 
 Vue.use(VueRouter);
 
@@ -22,6 +23,11 @@ const routes = [
     path: '/admin',
     name: 'admin',
     component: admin,
+  },
+  {
+    path: '/addArticle',
+    name: 'addArticle',
+    component: addArticle,
   },
   {
     path: '/login',
