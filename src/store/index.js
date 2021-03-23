@@ -9,6 +9,7 @@ export default new Vuex.Store({
     articles: null,
     articleData: null,
     search: '',
+    editChange: false,
   },
   mutations: {
     SETARTICLE(state, payload) {
@@ -22,6 +23,11 @@ export default new Vuex.Store({
     },
     NEWARTICLE(state, payload) {
       state.articles = [payload, ...state.articles];
+    },
+    EDITARTICLE(state, { id, editData }) {
+      const index = state.articles.map((item) => item.id).indexOF(id);
+      state.articles[index] = { id, ...editData };
+      state.editChange = !state.editChange;
     },
   },
   actions: {
@@ -40,6 +46,9 @@ export default new Vuex.Store({
     newArticle(context, payload) {
       // payload.id = new Date().getTime();
       context.commit('NEWARTICLE', payload);
+    },
+    editArticle(context, payload) {
+      context.commit('EDITARTICLE', payload);
     },
   },
   getters: {

@@ -37,7 +37,10 @@ export default {
     ...mapState(['articles']),
   },
   methods: {
-    editArticle() {},
+    editArticle(item) {
+      this.$router.push({ name: 'editArticle', params: { name: item } });
+      // console.log(id);
+    },
     deleteArticle() {
     },
     addArticle() {

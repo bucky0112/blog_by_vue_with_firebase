@@ -5,6 +5,7 @@ import articlePage from '../views/articlePage.vue';
 import admin from '../views/admin/admin.vue';
 import login from '../views/login.vue';
 import addArticle from '../views/admin/addArticle.vue';
+import editArticle from '../views/admin/editArticle.vue';
 
 Vue.use(VueRouter);
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/addArticle',
     name: 'addArticle',
     component: addArticle,
+  },
+  {
+    path: '/editArticle',
+    name: 'editArticle',
+    component: editArticle,
   },
   {
     path: '/login',
