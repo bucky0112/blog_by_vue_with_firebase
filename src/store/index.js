@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from 'axios';
+import db from './firebase';
 
 Vue.use(Vuex);
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
       const API = 'https://us-central1-expressapi-8c039.cloudfunctions.net/app/article';
       axios.get(API).then((res) => {
         context.commit('SETARTICLES', res.data.data);
+        console.log(db);
       });
     },
     getSearchKey(context, payload) {
