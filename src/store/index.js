@@ -1,16 +1,15 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import axios from 'axios';
+// import axios from 'axios';
 import db from './firebase';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    articles: null,
+    articles: [],
     articleData: null,
     search: '',
-    editChange: false,
   },
   mutations: {
     SETARTICLE(state, payload) {
@@ -25,32 +24,51 @@ export default new Vuex.Store({
     NEWARTICLE(state, payload) {
       state.articles = [payload, ...state.articles];
     },
-    EDITARTICLE(state, { id, editData }) {
+    EDITARTICLE: (state, { id, editData }) => {
       const index = state.articles.map((item) => item.id).indexOF(id);
-      state.articles[index] = { id, ...editData };
-      state.editChange = !state.editChange;
+      state.articles[index] = editData;
+    },
+    DELETEARTICLE: (state, payload) => {
+      const index = state.articles.map((item) => item.id).indexOF(payload);
+      state.articles.splice(index, 1);
     },
   },
   actions: {
+    editArticle: async (context, payload) => {
+      const docRef = db.collection('ARTICLES').doc(payload.id);
+      await docRef.update(payload.editData);
+      context.commit('EDITARTICLE', payload);
+    },
+    deleteArticle: async (context, payload) => {
+      const docRef = db.collection('ARTICLES').doc(payload);
+      await docRef.delete();
+      context.commit('DELETEARTICLE', payload);
+    },
+    getArticles: async (context) => {
+      const ref = db.collection('ARTICLES');
+      const result = await ref.get();
+      const payload = [];
+      result.forEach((item) => {
+        payload.push({
+          id: item.id,
+          ...item.data(),
+        });
+      });
+      context.commit('SETARTICLES', payload);
+    },
     getArticleData(context, payload) {
       context.commit('SETARTICLE', payload);
-    },
-    getArticles(context) {
-      const API = 'https://us-central1-expressapi-8c039.cloudfunctions.net/app/article';
-      axios.get(API).then((res) => {
-        context.commit('SETARTICLES', res.data.data);
-        console.log(db);
-      });
     },
     getSearchKey(context, payload) {
       context.commit('SETSEARCH', payload);
     },
-    newArticle(context, payload) {
-      // payload.id = new Date().getTime();
-      context.commit('NEWARTICLE', payload);
-    },
-    editArticle(context, payload) {
-      context.commit('EDITARTICLE', payload);
+    newArticle: async (context, payload) => {
+      const ref = db.collection('ARTICLES');
+      const addRef = await ref.add(payload);
+      context.commit('NEWARTICLE', {
+        id: addRef.id,
+        ...payload,
+      });
     },
   },
   getters: {
@@ -61,6 +79,5 @@ export default new Vuex.Store({
       return state.articles.filter((article) => article.title.match(state.search));
     },
   },
-  modules: {
-  },
+  modules: {},
 });
