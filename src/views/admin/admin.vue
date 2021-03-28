@@ -11,7 +11,7 @@
       <template v-slot:cell(id)="data">
         <b-button-group>
           <b-button variant="info" @click="editArticle(data)">編輯</b-button>
-          <b-button variant="warning" @click="deleteArticle(data)">刪除</b-button>
+          <b-button variant="warning" @click="deleteArt(data)">刪除</b-button>
         </b-button-group>
       </template>
     </b-table>
@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'admin',
@@ -37,11 +37,15 @@ export default {
     ...mapState(['articles']),
   },
   methods: {
+    ...mapActions(['deleteArticle']),
     editArticle(item) {
       this.$router.push({ name: 'editArticle', params: { name: item } });
       // console.log(id);
     },
-    deleteArticle() {
+    deleteArt(item) {
+      // eslint-disable-next-line no-restricted-globals
+      const msg = confirm('確認刪除文章？');
+      if (msg) this.deleteArticle(item.value);
     },
     addArticle() {
       this.$router.push('addArticle');

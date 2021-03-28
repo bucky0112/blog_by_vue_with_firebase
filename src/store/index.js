@@ -25,11 +25,11 @@ export default new Vuex.Store({
       state.articles = [payload, ...state.articles];
     },
     EDITARTICLE: (state, { id, editData }) => {
-      const index = state.articles.map((item) => item.id).indexOF(id);
+      const index = state.articles.map((item) => item.id).indexOf(id);
       state.articles[index] = editData;
     },
     DELETEARTICLE: (state, payload) => {
-      const index = state.articles.map((item) => item.id).indexOF(payload);
+      const index = state.articles.map((item) => item.id).indexOf(payload);
       state.articles.splice(index, 1);
     },
   },
@@ -38,11 +38,6 @@ export default new Vuex.Store({
       const docRef = db.collection('ARTICLES').doc(payload.id);
       await docRef.update(payload.editData);
       context.commit('EDITARTICLE', payload);
-    },
-    deleteArticle: async (context, payload) => {
-      const docRef = db.collection('ARTICLES').doc(payload);
-      await docRef.delete();
-      context.commit('DELETEARTICLE', payload);
     },
     getArticles: async (context) => {
       const ref = db.collection('ARTICLES');
@@ -69,6 +64,11 @@ export default new Vuex.Store({
         id: addRef.id,
         ...payload,
       });
+    },
+    deleteArticle: async (context, payload) => {
+      const docRef = db.collection('ARTICLES').doc(payload);
+      await docRef.delete();
+      context.commit('DELETEARTICLE', payload);
     },
   },
   getters: {
