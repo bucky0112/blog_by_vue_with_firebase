@@ -44,13 +44,6 @@ export default {
   },
   methods: {
     ...mapActions(['editArticle']),
-    save() {
-      this.formData.date = new Date().getTime();
-      this.editArticle({
-        id: this.$route.params.name.value,
-        editData: this.formData,
-      });
-    },
     loadData() {
       this.formData = this.$route.params.name.item;
     },
@@ -61,14 +54,17 @@ export default {
         date: '',
       };
     },
-  },
-  computed: {
-    ...mapState(['editChange']),
-  },
-  watch: {
-    editChange() {
+    save() {
+      this.formData.date = new Date().getTime();
+      this.editArticle({
+        id: this.$route.params.name.value,
+        editData: this.formData,
+      });
       this.$router.push('admin');
     },
+  },
+  computed: {
+    ...mapState(['articles']),
   },
 };
 </script>
