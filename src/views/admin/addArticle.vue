@@ -35,7 +35,6 @@ export default {
         title: '',
         content: '',
         date: '',
-        id: '',
       },
     };
   },
@@ -50,7 +49,6 @@ export default {
     },
     save() {
       this.formData.date = new Date().getTime();
-      this.formData.id = new Date().getTime() + 1;
       this.newArticle(this.formData);
       this.$router.push('admin');
     },
