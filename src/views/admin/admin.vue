@@ -40,7 +40,6 @@ export default {
     ...mapActions(['deleteArticle']),
     editArticle(item) {
       this.$router.push({ name: 'editArticle', params: { name: item } });
-      // console.log(id);
     },
     deleteArt(item) {
       // eslint-disable-next-line no-restricted-globals
@@ -60,8 +59,6 @@ export default {
       const y = date.getFullYear();
       const m = date.getMonth();
       const d = date.getDate();
-      // const h = date.getHours();
-      // const min = date.getMinutes();
       return `${y}/${m + 1}/${d}`;
     },
   },
