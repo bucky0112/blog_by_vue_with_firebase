@@ -1,25 +1,12 @@
 <template>
   <b-container>
     <b-form>
-      <b-form-group
-        label="帳號"
-        label-for="email"
-        class="text-left"
-      >
-        <b-form-input
-          id="email"
-          v-model="user.email"
-          type="email"
-          placeholder="請輸入 Email"
-          required
-        ></b-form-input>
+      <b-form-group label="帳號" label-for="email" class="text-left">
+        <b-form-input id="email" v-model="user.email" type="email" placeholder="請輸入 Email" required>
+        </b-form-input>
       </b-form-group>
 
-      <b-form-group
-        label="密碼"
-        label-for="password"
-        class="text-left"
-      >
+      <b-form-group label="密碼" label-for="password" class="text-left">
         <b-form-input
           id="password"
           v-model="user.password"
@@ -49,6 +36,7 @@ export default {
     login() {
       const { email, password } = this.user;
       if (!email || !password) {
+        // eslint-disable-next-line no-alert
         alert('請輸入完整資料');
       } else {
         this.$router.push('admin');

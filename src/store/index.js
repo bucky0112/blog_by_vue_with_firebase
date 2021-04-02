@@ -10,6 +10,7 @@ export default new Vuex.Store({
     articles: [],
     articleData: null,
     search: '',
+    loginData: null,
   },
   mutations: {
     SETARTICLE(state, payload) {
@@ -32,6 +33,9 @@ export default new Vuex.Store({
       const index = state.articles.map((item) => item.id).indexOf(payload);
       state.articles.splice(index, 1);
     },
+    // LOGINEMAIL(state, payload) {
+    //   state.loginData = payload;
+    // },
   },
   actions: {
     editArticle: async (context, payload) => {
